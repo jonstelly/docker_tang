@@ -1,9 +1,7 @@
 FROM alpine:3.14 AS builder
 
-
 ARG JOSE_COMMIT_SHA=145c41a4ec70c15f6f8aa12a915e16cb60f0991f
 ARG TANG_COMMIT_SHA=8affe3580c97280a8da31514d47c4ac4981992ec
-
 
 RUN apk add --no-cache --update \
     bash \
@@ -35,10 +33,18 @@ RUN git clone https://github.com/latchset/tang.git \
  && ninja install
 
 
+FROM alpine:3.14.0
 
+LABEL maintainer="Jon Stelly 967068+jonstelly@users.noreply.github.com"
 
-FROM padhihomelab/alpine-base:3.14.0_0.19.0_0.2
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 
+RUN apk add --no-cache --update \
+        'su-exec==0.2-r1' \
+        'tini==0.19.0-r0' \
+ && chmod +x /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT [ "tini" , "/usr/local/bin/docker-entrypoint" ]
 
 COPY --from=builder \
      /usr/local/bin/jose \
