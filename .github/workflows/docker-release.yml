@@ -98,14 +98,14 @@ jobs:
           push: true
           tags: ${{ steps.prepare.outputs.tags }}
           build-args: ${{ steps.prepare.outputs.args }}
-      -
-        name: "Docker Hub: Update description"
-        if: success() && github.event_name != 'pull_request'
-        uses: peter-evans/dockerhub-description@v2.4.3
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          DOCKERHUB_REPOSITORY: ${{ steps.prepare.outputs.image }}
+      # -
+      #   name: "Docker Hub: Update description"
+      #   if: success() && github.event_name != 'pull_request'
+      #   uses: peter-evans/dockerhub-description@v2.4.3
+      #   env:
+      #     DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      #     DOCKERHUB_REPOSITORY: ${{ steps.prepare.outputs.image }}
       -
         name: "Clean up"
         if: always()
