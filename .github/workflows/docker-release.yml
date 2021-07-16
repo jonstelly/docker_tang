@@ -33,7 +33,7 @@ jobs:
           PLATFORMS=linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6,linux/ppc64le,linux/s390x
 
           REPONAME=$(basename $GITHUB_REPOSITORY)
-          DOCKER_IMAGE=padhihomelab/${REPONAME#docker_}
+          DOCKER_IMAGE=jonstelly/${REPONAME#docker_}
 
           VERSION=testing
           if [[ $GITHUB_REF == refs/tags/* ]]; then
